@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<!-- ThymeLeaf symbols - 
+	$ - to get/evaluate a value stored from a variable
+	@ - for url value
+	* - to get the value from user and to store/collect in a variable
+-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" 
+			name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+		
+		<!-- Bootstrap CSS files same like as external css -->
+		<link rel="stylesheet" 
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+			integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+			crossorigin="anonymous" />
+		
+		<title>Records Page</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			<h3>Customer Directory</h3>
+			<hr>
+			
+			<a th:href="@{/customer/addForm}" class="btn btn-primary btn-sm mb-3">
+				Add Customer</a>
+			
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="customer : ${customers}">
+						<td th:text="${customer.firstName}" />
+						<td th:text="${customer.lastName}" />
+						<td th:text="${customer.email}" />
+						
+						<td>
+							<div class="row">
+								<div class="col-small">
+									<form action="#" th:action="@{/customer/updateForm}" method="post">
+										<input type="hidden" name="customerId" th:value="${customer.id}" />	<!-- getting particular customer id for updation -->
+										
+										<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Update</button>
+									</form>
+								</div>
+								
+								<div class="col-small">
+									<form action="#" th:action="@{/customer/delete}" method="post">
+										<input type="hidden" name="customerId" th:value="${customer.id}" /> <!-- getting particular customer id for deletion -->
+										
+										<button type="submit" class="btn btn-danger btn-sm" 
+											onclick="if(!(confirm('Are you sure to delete this record ?'))) return false;">
+											Delete</button>
+									</form>
+								</div>
+							</div>		
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</body>
+</html>
